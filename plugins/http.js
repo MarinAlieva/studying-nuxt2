@@ -1,14 +1,22 @@
-export default function ({ $http }) {
+import post from './post';
+import user from './user';
+
+const apiFactory = (http) => ({
+  post: post(http),
+  user: user(http),
+});
+
+export default function ({ $http, store }, inject) {
   $http.onRequest(config => {
-    console.log('Making request to ' + config.url)
+    store.commit('setLoading', true)
   });
 
   $http.onResponse((req, options, res) => {
-    console.log('Making request to ' + req.url)
+    store.commit('setLoading', false)
   });
 
   $http.onError((err) => {
-    // In case of unauthorized, redirect to a specific page
+    // In case of unauthorized, redirect to a sspecific page
     if (err.statusCode === 401) {
       console.log('redirect to 401')
     }
@@ -17,4 +25,7 @@ export default function ({ $http }) {
     // Tip: You can use error.response.data to get response message
     // Tip: You can return an object or Promise as fallback response to avoid rejection
   });
+
+  const api = apiFactory($http);
+  inject('api', api);
 }

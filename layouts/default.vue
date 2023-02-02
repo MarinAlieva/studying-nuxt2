@@ -1,7 +1,7 @@
 <template>
   <div>
-    <NuxtLink to="/article">Article page</NuxtLink>
-    <NuxtLink to="/news">News pages</NuxtLink>
+    <NuxtLink to="/post">Post page</NuxtLink>
+    <NuxtLink to="/user">User pages</NuxtLink>
     <Nuxt />
   </div>
 </template>
